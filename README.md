@@ -16,7 +16,10 @@ Gereksinimler
 - .NET 8 SDK (net8.0-windows)
 - Windows 10/11 (GUI uygulaması)
 - (Opsiyonel) Supabase projesi — storage ve REST API anahtarları kullanmak istiyorsanız ortam değişkenleri (.env) ayarlanmalıdır.
- GÖRSELLER
+ <div align="center">
+  <h1>Giriş Ekranı</h1>
+  <p>Modern Giriş Ekranı</p>
+</div>
 <img width="1002" height="621" alt="{4167F1B6-0212-4A7C-AC40-1D89D4B20055}" src="https://github.com/user-attachments/assets/68a510bb-cddc-4b00-a9de-dadb7c9f668c" />
 <img width="501" height="628" alt="{EEAC0EC5-B9DD-4818-8077-49044676A2CA}" src="https://github.com/user-attachments/assets/f5ea1c01-2aa9-441a-979b-8df44dc7ca64" />
 <img width="1443" height="881" alt="{605618ED-3438-4640-8018-E464977F115B}" src="https://github.com/user-attachments/assets/8ad8a040-1b32-46af-82a5-fdf7e473ffb0" />
