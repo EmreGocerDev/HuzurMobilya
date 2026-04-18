@@ -1,6 +1,6 @@
 # Huzur Mobilya
 
-![Huzur Mobilya Logo](logo/logo.png)
+![Huzur Mobilya Logo](HuzurMobilya/logo/logo.png)
 
 Modern, hafif ve hızlı bir masaüstü stok & satış yönetimi uygulaması — .NET 8 WinForms ile geliştirilmiştir. Bu repo, demo amaçlı yerel bir Supabase backend'i düşünerek tasarlanmıştır (REST + Storage).
 
