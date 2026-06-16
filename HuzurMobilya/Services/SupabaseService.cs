@@ -16,29 +16,64 @@ namespace HuzurMobilya.Services
         private static HttpClient _http = new();
         private static string _url = "";
         private static string _key = "";
+        private static bool _initialized;
         public static Profile? CurrentUser { get; set; }
 
         public static async Task InitializeAsync()
         {
-            var envPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ".env");
-            if (!File.Exists(envPath))
-                envPath = Path.Combine(Directory.GetCurrentDirectory(), ".env");
-            if (File.Exists(envPath))
-                DotNetEnv.Env.Load(envPath);
+            if (_initialized) return;
 
-            _url = Environment.GetEnvironmentVariable("SUPABASE_URL") ?? "";
-            _key = Environment.GetEnvironmentVariable("SUPABASE_KEY") ?? "";
+            // Load .env from embedded resource
+            try
+            {
+                var asm = typeof(SupabaseService).Assembly;
+                using var stream = asm.GetManifestResourceStream("HuzurMobilya..env");
+                if (stream != null)
+                {
+                    using var reader = new StreamReader(stream);
+                    var content = await reader.ReadToEndAsync();
+                    foreach (var line in content.Split('\n'))
+                    {
+                        var trimmed = line.Trim();
+                        if (string.IsNullOrEmpty(trimmed) || trimmed.StartsWith("#"))
+                            continue;
+                        
+                        var parts = trimmed.Split('=', 2);
+                        if (parts.Length == 2)
+                        {
+                            var key = parts[0].Trim();
+                            var val = parts[1].Trim();
+                            Environment.SetEnvironmentVariable(key, val);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // If embedded resource load fails, continue - fallback to env vars if they exist
+            }
+
+            _url = (Environment.GetEnvironmentVariable("SUPABASE_URL") ?? "").Trim();
+            _key = (Environment.GetEnvironmentVariable("SUPABASE_KEY") ?? "").Trim();
 
             if (string.IsNullOrEmpty(_url) || string.IsNullOrEmpty(_key))
-                throw new Exception(".env dosyasinda SUPABASE_URL ve SUPABASE_KEY tanimli olmali.");
+                throw new Exception("SUPABASE_URL ve SUPABASE_KEY gecersiz veya bos. Program hatali derlenildi.");
 
-            _http.DefaultRequestHeaders.Add("apikey", _key);
+            _url = _url.TrimEnd('/');
+            if (!Uri.TryCreate(_url, UriKind.Absolute, out _))
+                throw new Exception($"SUPABASE_URL gecersiz: '{_url}'. Ornek: https://projeid.supabase.co");
+
+            _http.DefaultRequestHeaders.Remove("apikey");
+            _http.DefaultRequestHeaders.Remove("Prefer");
+            _http.DefaultRequestHeaders.TryAddWithoutValidation("apikey", _key);
+            _http.DefaultRequestHeaders.TryAddWithoutValidation("Prefer", "return=representation");
             _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _key);
-            _http.DefaultRequestHeaders.Add("Prefer", "return=representation");
 
             var test = await _http.GetAsync($"{_url}/rest/v1/profiles?limit=1");
             if (!test.IsSuccessStatusCode)
                 throw new Exception("Supabase baglantisi basarisiz: " + test.StatusCode);
+
+            _initialized = true;
         }
 
         private static async Task<List<T>> GetTable<T>(string table, string query = "")
@@ -262,6 +297,11 @@ namespace HuzurMobilya.Services
                 await Insert<object>("order_items", new { order_id = orderId, product_id = item.ProductId, quantity = item.Quantity, unit_price = item.UnitPrice, tax_rate = item.TaxRate, discount_rate = item.DiscountRate, line_total = item.LineTotal });
             }
             return orderId;
+        }
+
+        public static async Task UpdateOrderStatusAsync(string id, string orderStatus, string paymentStatus)
+        {
+            await Update("orders", id, new { order_status = orderStatus, payment_status = paymentStatus });
         }
 
         // ---- EMPLOYEES ----

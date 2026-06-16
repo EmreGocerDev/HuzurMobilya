@@ -213,4 +213,14 @@ namespace HuzurMobilya.Models
         public bool IsRead { get; set; }
         public DateTime CreatedAt { get; set; }
     }
+
+    public class AgendaNote
+    {
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public DateTime Date { get; set; } = DateTime.Today;
+        public string Title { get; set; } = "";
+        public string Content { get; set; } = "";
+        public string Tag { get; set; } = "genel"; // genel, toplanti, hatirlatma, onemli
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+    }
 }

@@ -76,16 +76,18 @@ namespace HuzurMobilya.Forms
             sidebar.Controls.Add(menuLabel);
             sidebar.Controls.SetChildIndex(menuLabel, 1);
 
-            AddSidebarButton("📊  Dashboard", (s, e) => { LoadPage(new DashboardPage()); SetActiveButton(s as Button); });
-            AddSidebarButton("📦  Ürünler", (s, e) => { LoadPage(new ProductsPage()); SetActiveButton(s as Button); });
-            AddSidebarButton("📋  Stok Takibi", (s, e) => { LoadPage(new StockPage()); SetActiveButton(s as Button); });
-            AddSidebarButton("🔄  Stok Hareketleri", (s, e) => { LoadPage(new StockMovementsPage()); SetActiveButton(s as Button); });
-            AddSidebarButton("👥  Müşteriler", (s, e) => { LoadPage(new CustomersPage()); SetActiveButton(s as Button); });
-            AddSidebarButton("🛒  Siparişler", (s, e) => { LoadPage(new OrdersPage()); SetActiveButton(s as Button); });
-            AddSidebarButton("👨‍💼  Personel", (s, e) => { LoadPage(new EmployeesPage()); SetActiveButton(s as Button); });
-            AddSidebarButton("📂  Kategoriler", (s, e) => { LoadPage(new CategoriesPage()); SetActiveButton(s as Button); });
-            AddSidebarButton("🏭  Tedarikçiler", (s, e) => { LoadPage(new SuppliersPage()); SetActiveButton(s as Button); });
-            AddSidebarButton("🔔  Bildirimler", (s, e) => { LoadPage(new NotificationsPage()); SetActiveButton(s as Button); });
+            AddSidebarButton("📊  Dashboard",        (s, e) => { LoadPage(new DashboardPage());        SetActiveButton(s as Button); });
+            AddSidebarButton("📦  Ürünler",           (s, e) => { LoadPage(new ProductsPage());         SetActiveButton(s as Button); });
+            AddSidebarButton("📋  Stok Takibi",       (s, e) => { LoadPage(new StockPage());            SetActiveButton(s as Button); });
+            AddSidebarButton("🔄  Stok Hareketleri",  (s, e) => { LoadPage(new StockMovementsPage());  SetActiveButton(s as Button); });
+            AddSidebarButton("👥  Müşteriler",         (s, e) => { LoadPage(new CustomersPage());       SetActiveButton(s as Button); });
+            AddSidebarButton("🛒  Siparişler",         (s, e) => { LoadPage(new OrdersPage());          SetActiveButton(s as Button); });
+            AddSidebarButton("👨‍💼  Personel",           (s, e) => { LoadPage(new EmployeesPage());       SetActiveButton(s as Button); });
+            AddSidebarButton("📂  Kategoriler",        (s, e) => { LoadPage(new CategoriesPage());      SetActiveButton(s as Button); });
+            AddSidebarButton("🏭  Tedarikçiler",       (s, e) => { LoadPage(new SuppliersPage());       SetActiveButton(s as Button); });
+            AddSidebarButton("🔔  Bildirimler",        (s, e) => { LoadPage(new NotificationsPage());   SetActiveButton(s as Button); });
+            AddSidebarButton("📅  Ajanda",             (s, e) => { LoadPage(new AgendaPage());          SetActiveButton(s as Button); });
+            AddSidebarButton("❓  Yardım",             (s, e) => { LoadPage(new HelpPage());            SetActiveButton(s as Button); });
 
             // Logout at bottom
             var btnLogout = new Button
@@ -204,7 +206,8 @@ namespace HuzurMobilya.Forms
                 lblPageTitle.Text = btn.Text.Replace("📊", "").Replace("📦", "")
                     .Replace("📋", "").Replace("🔄", "").Replace("👥", "")
                     .Replace("🛒", "").Replace("👨‍💼", "").Replace("📂", "")
-                    .Replace("🏭", "").Replace("🔔", "").Replace("🚪", "").Trim();
+                    .Replace("🏭", "").Replace("🔔", "").Replace("🚪", "")
+                    .Replace("📅", "").Replace("❓", "").Trim();
             }
         }
 
