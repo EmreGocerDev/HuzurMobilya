@@ -11,7 +11,7 @@ son
 - Hızlı yükleme için paralel HTTP çağrıları (Task.WhenAll)
 - Modern özel başlık çubuğu (FormBorderStyle.None) ve logo
 - Tek dosya (self-contained) Windows x64 publish desteği
-
+sadasd
 Gereksinimler
 - .NET 8 SDK (net8.0-windows)
 - Windows 10/11 (GUI uygulaması)
